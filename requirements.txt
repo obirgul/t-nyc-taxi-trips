@@ -1,0 +1,4 @@
+sqlalchemy==1.4.51
+h3==3.7.6
+pandas-gbq==0.20.0
+pandas~=1.4.1

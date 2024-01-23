@@ -1,0 +1,30 @@
+name: Upload to Google Cloud Storage
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch as needed
+
+jobs:
+  job_id:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-latest
+    steps:
+      - id: 'checkout'
+        uses: 'actions/checkout@v4'
+
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - id: 'upload-folder'
+        uses: 'google-github-actions/upload-cloud-storage@v2'
+        with:
+          path: 'dags/'
+          destination: 'us-central1-ttt-cloud-compo-497136dc-bucket/'
+          process_gcloudignore: false
